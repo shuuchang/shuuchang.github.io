@@ -1,6 +1,6 @@
-# egg-meteor-server的仓库
-https://github.com/shuuchang/shuuchang.github.io
-# egg-meteor-server的设计背景
+# egg-meteor的仓库
+https://github.com/shuuchang/egg-meteor
+# egg-meteor的设计背景
 在国网中干了几年统一权限，吸取了其优秀的部分设计，也吸取了其有些过时的部分设计，结合以往经验，渐渐的萌生了一个新的类似于统一权限的程序设计方案，充分利用postgresql及其fdw插件、mariadb及其集群的功能实现数据的流转，业务逻辑与页面由egg.js实现，如出现数据流转稳定性不足，估计还需要使用kettle实现数据的辅助流转。
 
 ## 先说说统一权限
@@ -19,7 +19,7 @@ https://github.com/shuuchang/shuuchang.github.io
 
 还是因为要接入的系统存在多种多样，虽然可以用接口解决许多，任然有接口无法支撑的情况，我们设计的UCenter如何支撑呢。
 
-所以在设计egg-meteor-server时想了许多方案，最后确定这这样的一个方案，egg-meteor-server使用postgresql来作为配置数据库与归档数据库，用egg.js实现页面与相关配置逻辑。配置完成后使用mysql_fdw插件将数据同步至mariadb集群中，再基于mariadb集群对外提供服务。这是一种服务端与客户端分离，使用postgresql与mariadb集群各自的优势，由postgresql支撑服务端，实现数据的配置、同步，由mariadb集群支撑客户端对外服务。干了很长时间的实施运维，代码对我来说还是存在难度的，辛亏对各个数据库有较为深刻的了解，反而可以充分利用数据库及其插件的优势，让我尽量在代码上少花点时间。
+所以在设计egg-meteor时想了许多方案，最后确定这这样的一个方案，egg-meteor使用postgresql来作为配置数据库与归档数据库，用egg.js实现页面与相关配置逻辑。配置完成后使用mysql_fdw插件将数据同步至mariadb集群中，再基于mariadb集群对外提供服务。这是一种服务端与客户端分离，使用postgresql与mariadb集群各自的优势，由postgresql支撑服务端，实现数据的配置、同步，由mariadb集群支撑客户端对外服务。干了很长时间的实施运维，代码对我来说还是存在难度的，辛亏对各个数据库有较为深刻的了解，反而可以充分利用数据库及其插件的优势，让我尽量在代码上少花点时间。
 
 ## postgresql及其插件
 postgresql是一个和Oracle功能一样强大的开源数据库，可能就是因为开源，所以他的各种插件是所有数据库中最为成熟的一个。在这里我们主要使用的fdw（foreign data wrapper，外部数据装饰器），比较成熟的是面向[mysql（mariadb）](https://github.com/EnterpriseDB/mysql_fdw)、[MongoDB](https://github.com/EnterpriseDB/mongo_fdw)、[Hadoop（HDFS）](https://github.com/EnterpriseDB/hdfs_fdw)，通过映射，可以在postgresql中像操作内部表一样，对映射后的mysql表进行CURD操作。
@@ -34,7 +34,7 @@ MriaDB的集群使用全冗余集群，即每台单机数据库中都储存着�
 ## egg.js
 egg.js是由阿里对node.js进一步封装形成的框架，继承并优化了node.js的模块。具体资料请查看[egg.js](https://eggjs.org/zh-cn/)
 
-通过对我所掌握的语言的了解程度，最终确定了egg.js为egg-meteor-server的页面实现、逻辑与接口实现的编程语言。
+通过对我所掌握的语言的了解程度，最终确定了egg.js为egg-meteor的页面实现、逻辑与接口实现的编程语言。
 
 ## egg-meteor-server设计的部分补充
 因为长期从事实施运维，在开发上功力尚浅，所以在设计过程中尽量使用各数据库自身诸多优势，所用框架也是尽可能简单的实现所需功能的egg.js。
