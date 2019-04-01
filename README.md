@@ -1,5 +1,5 @@
-
-
+# egg-meteor-server的仓库
+https://github.com/shuuchang/shuuchang.github.io
 # egg-meteor-server的设计背景
 在国网中干了几年统一权限，吸取了其优秀的部分设计，也吸取了其有些过时的部分设计，结合以往经验，渐渐的萌生了一个新的类似于统一权限的程序设计方案，充分利用postgresql及其fdw插件、mariadb及其集群的功能实现数据的流转，业务逻辑与页面由egg.js实现，如出现数据流转稳定性不足，估计还需要使用kettle实现数据的辅助流转。
 
